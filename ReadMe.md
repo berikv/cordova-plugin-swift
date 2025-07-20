@@ -14,39 +14,67 @@ This plugin automates these requirements safely and portably, without hardcoding
 
 ## Installation
 
+Add the plugin to a cordova app:
+
 ```sh
 cordova plugin add cordova-plugin-swift
 ```
+
+Use cordova-plugin-swift in you own plugin:
+
+add to your `plugin.xml`:
+
+```xml
+<plugin name="cordova-plugin-swift" id="cordova-plugin-swift" version="1.0.0">
+```
+
+and/or add to your `package.json`:
+
+```json
+"engines": {
+    "cordovaDependencies": {
+        "x.x.x": { "cordova-plugin-swift": "1.0.0" }
+    }
+}
+```
+
+Where x.x.x is the version of your plugin that starts requiring the cordova-plugin-swift plugin.
 
 ## Configuration
 
 Customize the Swift version and deployment target using preferences in your `config.xml`.
 
-### Default behavior (no config)
-
-- `SWIFT_VERSION` is set to `5.0` (only if not already set)
-- `IPHONEOS_DEPLOYMENT_TARGET` is set to `12.0` (only if not already set)
-- `ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES` is always set to `YES`
-
-### Optional preferences
-
-To override these values, add to your `config.xml`:
+You must define the Swift version. This plugin uses `SWIFT_VERSION` to configure the iOS build settings. Set it explicitly using the following in your app's `config.xml`:
 
 ```xml
 <platform name="ios">
-  <preference name="SwiftVersion" value="5.7" />
-  <preference name="OverrideiOSDeploymentTarget" value="14.0" />
+  <preference name="SWIFT_VERSION" value="5.7" />
 </platform>
 ```
 
-These preferences will **override existing values**, even if they're already defined by Cordova or other plugins.
+### IPHONEOS_DEPLOYMENT_TARGET
 
-### Example: support Swift 4.2 for older plugin
+Cordova iOS (`cordova-ios`) sets the deployment target automatically in the generated xcode project file. `cordova-plugin-swift` will attempt to read the deployment target value from that generated project file.
+
+You can specify the deployment target that `cordova-plugin-swift` will use, but note that this will not change the project wide deployment target setting.
+
+If no deployment target is found, `cordova-plugin-swift` will default to `12.0`.
+
+#### Example override
 
 ```xml
 <platform name="ios">
-  <preference name="SwiftVersion" value="4.2" />
-  <preference name="OverrideiOSDeploymentTarget" value="11.0" />
+  <preference name="SWIFT_VERSION" value="6" />
+  <preference name="IPHONEOS_DEPLOYMENT_TARGET" value="26.0" />
+</platform>
+```
+
+### Example override for older iOS SDKs that support Swift 4.2
+
+```xml
+<platform name="ios">
+  <preference name="SWIFT_VERSION" value="4.2" />
+  <preference name="IPHONEOS_DEPLOYMENT_TARGET" value="11.0" />
 </platform>
 ```
 
@@ -64,7 +92,7 @@ For every build configuration (Debug/Release), it will:
 
 - Requires Cordova CLI ≥ 10.0.0
 - Requires `cordova-ios` ≥ 6.0.0
-- Compatible with Xcode 12+
+- Compatible with Xcode 11.4+ and later
 
 ## License
 

@@ -15,13 +15,18 @@
   </engines>
 
   <platform name="ios">
-    <preference name="OverrideiOSDeploymentTarget" default="12.0" />
-    <preference name="SwiftVersion" default="5.0" />
+    <preference name="SWIFT_VERSION" default="5.0" />
+    <!-- 
+    Set the IPHONEOS_DEPLOYMENT_TARGET if your project does not set a default value.
+    See ReadMe.md for more information.
+    <preference name="IPHONEOS_DEPLOYMENT_TARGET" default="12.0" /> 
+    -->
+
 
     <config-file target="*-Info.plist" parent="CFBundleDevelopmentRegion">
       <string>en</string>
     </config-file>
 
-    <hook type="after_prepare" src="src/swift.js" />
+    <hook type="before_compile" src="src/swift.js" />
   </platform>
 </plugin>
