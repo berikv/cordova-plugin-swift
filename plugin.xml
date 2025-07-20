@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        id="cordova-plugin-swift"
+        version="1.0.0"
+        xmlns:ios="http://schemas.apple.com/ios/ns">
+
+  <name>SwiftSupport</name>
+  <description>Add Swift support to Cordova iOS projects</description>
+  <author>Berik Visschers</author>
+  <license>MIT</license>
+
+  <engines>
+    <engine name="cordova" version=">=10.0.0" />
+    <engine name="cordova-ios" version=">=6.0.0" />
+  </engines>
+
+  <platform name="ios">
+    <preference name="OverrideiOSDeploymentTarget" default="12.0" />
+    <preference name="SwiftVersion" default="5.0" />
+
+    <config-file target="*-Info.plist" parent="CFBundleDevelopmentRegion">
+      <string>en</string>
+    </config-file>
+
+    <hook type="after_prepare" src="src/swift.js" />
+  </platform>
+</plugin>
